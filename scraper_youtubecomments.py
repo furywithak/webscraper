@@ -15,20 +15,16 @@ try:
 
     video_name = WebDriverWait(driver,20).until(EC.presence_of_element_located
                                                    ((By.XPATH, """// *[ @ id = "container"] / h1""")))
-    print (video_name.text)
+    time.sleep(10)
     date = WebDriverWait(driver, 10).until(EC.presence_of_element_located
                                     ((By.XPATH, """//*[@id="upload-info"]""")))
-    print (date.text)
-
+    time.sleep(2)
     views = WebDriverWait(driver, 10).until(EC.presence_of_element_located
                                     ((By.XPATH, """//*[@id="count"]""")))
-    print (views.text)
-
+    time.sleep(2)
     author_name = WebDriverWait(driver, 10).until(EC.presence_of_element_located
                                     ((By.XPATH, """ //*[@id="owner-name"]/a""")))
-    print(author_name.text)
-
-    time.sleep(SCROLL_PAUSE)
+    time.sleep(2)
 
     for i in range(0, 100):
         driver.find_element_by_tag_name('html').send_keys(Keys.END)
@@ -40,12 +36,20 @@ try:
     comment_list = []
     author_list = []
 
-    create_youtube_excel(url, video_name, author_name, views, date, comments, authors)
+    for comment in comments:
+        comment_list.append(comment.text)
+
+    for author in authors:
+        author_list.append(author.text)
+
+    create_youtube_excel(url, video_name.text, author_name.text, views.text, date.text, comment_list, author_list)
 except TimeoutException:
     print("TimeoutException")
     driver.quit()
 finally:
     driver.quit()
+
+
 
 
 
