@@ -11,7 +11,7 @@ def scroll_down(driver):
         time.sleep(SCROLL_PAUSE)
 
 def create_youtubelive_excel(url, name_of_video, author_name, viewers, time_of_video, full_commentlist, full_authorlist):
-    workbook = xlsxwriter.Workbook('youtubelive_' + url+ '.xlsx')
+    workbook = xlsxwriter.Workbook('youtubelive_' + name_of_video+ '.xlsx')
 
     bold = workbook.add_format({'bold': True})
 
@@ -39,11 +39,10 @@ def create_youtubelive_excel(url, name_of_video, author_name, viewers, time_of_v
         worksheet.write('C' + str(9 + i), full_commentlist[i])
 
     workbook.close()
-    return worksheet
 
-def create_youtube_excel(url, video_name, video_owner, views, date, comments, authors):
+def create_youtube_excel(url, video_name, video_owner, views, date, authors, comments):
 
-    workbook = xlsxwriter.Workbook('youtube' + url+ '.xlsx')
+    workbook = xlsxwriter.Workbook('youtube_' + video_name + '.xlsx')
     bold = workbook.add_format({'bold': True})
 
     worksheet = workbook.add_worksheet()
@@ -70,4 +69,3 @@ def create_youtube_excel(url, video_name, video_owner, views, date, comments, au
         worksheet.write('C' + str(9 + i), comments[i])
 
     workbook.close()
-    return worksheet
