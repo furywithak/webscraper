@@ -1,6 +1,7 @@
 import xlsxwriter
 import time
 from selenium.webdriver.common.keys import Keys
+import os
 
 def scroll_down(driver):
     SCROLL_PAUSE = 10
@@ -10,22 +11,21 @@ def scroll_down(driver):
         driver.find_element_by_tag_name('html').send_keys(Keys.END)
         time.sleep(SCROLL_PAUSE)
 
-def create_youtubelive_excel(url, name_of_video, author_name, viewers, time_of_video, full_commentlist, full_authorlist):
-    workbook = xlsxwriter.Workbook('youtubelive_' + name_of_video+ '.xlsx')
-
+def create_youtube_excel_live(url, video_name, author_name, views, date, full_authorlist, full_commentlist):
+    workbook = xlsxwriter.Workbook('youtube_live_' + author_name + '.xlsx')
     bold = workbook.add_format({'bold': True})
 
     worksheet = workbook.add_worksheet()
     worksheet.write('A1', 'Youtube Link', bold)
     worksheet.write('C1', url)
     worksheet.write('A2', 'Video Name', bold)
-    worksheet.write('C2', name_of_video)
+    worksheet.write('C2', video_name)
     worksheet.write('A3', 'Video Owner', bold)
     worksheet.write('C3', author_name)
-    worksheet.write('A4', 'Number of Viewers at Start', bold)
-    worksheet.write('C4', viewers)
-    worksheet.write('A5', 'Time of Video', bold)
-    worksheet.write('C5', time_of_video)
+    worksheet.write('A4', 'Number of Views', bold)
+    worksheet.write('C4', views)
+    worksheet.write('A5', 'Date Posted', bold)
+    worksheet.write('C5', date)
 
     worksheet.set_column('A:C', 20)
     worksheet.set_column('C:C', 400)
@@ -41,7 +41,6 @@ def create_youtubelive_excel(url, name_of_video, author_name, viewers, time_of_v
     workbook.close()
 
 def create_youtube_excel(url, video_name, video_owner, views, date, authors, comments):
-
     workbook = xlsxwriter.Workbook('youtube_' + video_name + '.xlsx')
     bold = workbook.add_format({'bold': True})
 
@@ -69,3 +68,4 @@ def create_youtube_excel(url, video_name, video_owner, views, date, authors, com
         worksheet.write('C' + str(9 + i), comments[i])
 
     workbook.close()
+
